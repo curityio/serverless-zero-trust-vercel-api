@@ -1,0 +1,17 @@
+{
+  "name": "serverless-api",
+  "version": "1.0.0",
+  "description": "A simple serverless API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "vercel dev",
+    "deploy": "vercel deploy --prod"
+  },
+  "author": "Jonas Iggbom",
+  "license": "ISC",
+  "dependencies": {
+    "jose": "^3.19.0",
+    "vercel": "^23.1.2"
+  }
+}
