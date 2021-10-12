@@ -1,39 +1,17 @@
-export function random(arr: string[]) {
+/* Class that returns some random data */
+export class Data{
+
+  public random(arr: string[]) {
     return arr[Math.floor(Math.random() * arr.length)]
   }
   
-  export function getData() {
-    const adjectives = [
-      'adorable',
-      'agreeable',
-      'alert',
-      'alive',
-      'amused',
-      'angry',
-      'annoyed',
-      'annoying',
-      'anxious'
-    ]
+  public getData() {
+    const adjectives = ['adorable', 'agreeable', 'alert', 'alive', 'amused', 'angry', 'annoyed', 'annoying', 'anxious']
   
-    const verbs = [
-      'correct',
-      'respect',
-      'tolerate',
-      'believe',
-      'maintain'
-    ]
+    const verbs = ['correct', 'respect', 'tolerate', 'believe', 'maintain']
   
-    const nouns = [
-      'women',
-      'shoe',
-      'basketball',
-      'cousin',
-      'house',
-      'lawyer',
-      'table'
-    ]
+    const nouns = ['women', 'shoe', 'basketball', 'cousin', 'house', 'lawyer', 'table']
   
-    return `${random(verbs)} ${random(adjectives)} ${random(
-      adjectives
-    )} ${random(nouns)}`
+    return `${this.random(verbs)} ${this.random(adjectives)} ${this.random(adjectives)} ${this.random(nouns)}`
   }
+}

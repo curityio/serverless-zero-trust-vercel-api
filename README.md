@@ -15,7 +15,7 @@ vercel login
 
 Deploy the code to Vercel and provide the `ISS`, `AUD` and `ALG` env variables
 ```sh
-vercel --env ISS=https://iggbom-curity.ngrok.io/oauth/v2/oauth-anonymous --env AUD=www --env ALG=\'RS256\' deploy
+vercel --env ISS=https://iggbom-curity.ngrok.io/oauth/v2/oauth-anonymous --env AUD=www --env ALG='RS256' deploy
 ```
 
 Promote to production

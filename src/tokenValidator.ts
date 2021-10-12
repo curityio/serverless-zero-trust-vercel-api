@@ -2,7 +2,6 @@ import { EmbeddedJWK } from 'jose/jwk/embedded'
 import { jwtVerify } from 'jose/jwt/verify'
   
 export class TokenValidator{
-
   private readonly _authorizationHeader: string;
 
   public constructor(authorizationHeader: string) {
@@ -10,17 +9,16 @@ export class TokenValidator{
   }
 
   public async validateJwt() {
-
     const jwt = this.getToken(this._authorizationHeader)
-    const { payload, protectedHeader } = await jwtVerify(jwt, EmbeddedJWK, {
+
+    /* Set options from provided environment variables */
+    const options = {
       issuer: process.env.ISS,
       audience: process.env.AUD,
       algorithms: [process.env.ALG]
-    })
+    }
 
-
-    console.log(protectedHeader)
-    console.log(payload)
+    const { payload, protectedHeader } = await jwtVerify(jwt, EmbeddedJWK, options)
   }
 
   /* Extract JWT from Authorization header */
