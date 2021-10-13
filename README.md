@@ -28,7 +28,7 @@ npm install
 
 Deploy the code to Vercel and provide the `ISS`, `AUD` and `ALG` env variables in the deploy command or configure the environment variables in the Vercel Web UI.
 ```sh
-vercel --env ISS=https://iggbom-curity.ngrok.io/oauth/v2/oauth-anonymous --env AUD=www --env ALG='RS256' deploy
+vercel --env ISS=https://idsvr.example.com/oauth/v2/oauth-anonymous --env AUD=www --env ALG='RS256' deploy
 ```
 
 Promote to production
