@@ -1,4 +1,8 @@
 # Serverless Zero Trust Vercel API
+
+[![Quality](https://img.shields.io/badge/quality-experiment-red)](https://curity.io/resources/code-examples/status/)
+[![Availability](https://img.shields.io/badge/availability-source-blue)](https://curity.io/resources/code-examples/status/)
+
 A serverless zero trust API for Vercel deployent protected with self contained JWTs
 
 ## Create Certificats
