@@ -34,3 +34,7 @@ vercel --prod
 
 ## Testing the code
 Run a flow that obtain a JWT access token then call the Vercel deployed api. Further details in the [Securing a Serverless API on Vercel using JWTs](https://curity.io/resources/learn/serverless-zero-trust-api-on-vercel) article.
+
+## Further Information
+
+Please visit [curity.io](https://curity.io/) for more information about the Curity Identity Server.
