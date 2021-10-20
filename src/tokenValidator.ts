@@ -1,32 +1,53 @@
-import { EmbeddedJWK } from 'jose/jwk/embedded'
-import { jwtVerify } from 'jose/jwt/verify'
+import { EmbeddedJWK } from 'jose/jwk/embedded';
+import { jwtVerify } from 'jose/jwt/verify';
+import { TrustChainValidator } from './trustChainValidator';
+import { Configuration } from './configuration';
+import { JWSHeaderParameters } from 'jose/types';
+import { decodeProtectedHeader } from 'jose/util/decode_protected_header';
   
 export class TokenValidator{
-  private readonly _authorizationHeader: string;
+  private readonly authorizationHeader: string;
+  private readonly trustChainValidator: TrustChainValidator;
+  private readonly config = new Configuration;
 
-  public constructor(authorizationHeader: string) {
-    this._authorizationHeader = authorizationHeader;
+  public constructor(authorizationHeader: string, inter:string, root:string) {
+    this.authorizationHeader = authorizationHeader;
+    this.trustChainValidator = new TrustChainValidator(this.config, inter, root);
   }
 
-  public async validateJwt() {
-    const jwt = this.getToken(this._authorizationHeader)
-
-    /* Set options from provided environment variables */
+  public async validateJwt() { 
+    
+    const jwt = this.getAccessToken(this.authorizationHeader);
+    
+    /* Set options from provided configuration */
     const options = {
-      issuer: process.env.ISS,
-      audience: process.env.AUD,
-      algorithms: [process.env.ALG]
-    }
+      issuer: this.config.issuer,
+      audience: this.config.audience,
+      algorithms: [this.config.algorithms]
+    };
 
-    const { payload, protectedHeader } = await jwtVerify(jwt, EmbeddedJWK, options)
+    /* Validate token using EmbeddedJWT */
+    const { payload, protectedHeader } = await jwtVerify(jwt, EmbeddedJWK, options);
+
+    const [accessTokenJwt, header] = this.parseToken(jwt);
+    
+    /* Validate the trust chain */
+    const tokenSigningPublicKey = await this.trustChainValidator.validate(header);
   }
 
   /* Extract JWT from Authorization header */
-  private getToken(authorizationHeader: string) {
-    if (authorizationHeader && authorizationHeader.split(" ")[0] === "Bearer") {
-      return authorizationHeader.split(" ")[1];
-    } 
+  private getAccessToken(authorizationHeader: string) {
 
-    throw new Error('No valid authorization header provided');
+    if (authorizationHeader && authorizationHeader.toLowerCase().startsWith('bearer ')) {
+      return authorizationHeader.substring(7, authorizationHeader.length);
+    }
+    
+    throw new Error('No valid authorization header was provided');
+  }
+
+  /* Read the JWT and its header details */
+  public parseToken(accessTokenJwt: string): [string, JWSHeaderParameters]  {
+    const header = decodeProtectedHeader(accessTokenJwt) as JWSHeaderParameters;
+    return [accessTokenJwt, header];
   }
 }

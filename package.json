@@ -8,10 +8,13 @@
     "start": "vercel dev",
     "deploy": "vercel deploy --prod"
   },
-  "author": "Jonas Iggbom",
-  "license": "ISC",
+  "author": "Curity",
+  "license": "Apache-2.0",
   "dependencies": {
+    "base64url": "^3.0.1",
+    "fs-extra": "^10.0.0",
     "jose": "^3.19.0",
+    "node-forge": "^0.10.0",
     "vercel": "^23.1.2"
   }
 }
